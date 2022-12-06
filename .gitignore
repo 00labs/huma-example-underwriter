@@ -127,3 +127,13 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Project dotenv files
+*.env
+
+# terraform
+.terraform
+terraform.tfstate.backup
+*out.plan
+*.tfstate
+terraform/**/*.plan
