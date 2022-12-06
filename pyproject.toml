@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "huma-underwriter-eth-txns"
+version = "0.1.0"
+description = ""
+authors = ["Lei Du <lei@huma.finance>"]
+readme = "README.md"
+packages = [{include = "huma_underwriter_eth_txns"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
