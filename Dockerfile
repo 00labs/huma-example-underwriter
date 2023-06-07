@@ -14,7 +14,7 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     ; rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/app/underwriter/
-COPY ./ ./
+COPY credit-line ./
 
 RUN pip install poetry==1.2.2
 
@@ -29,4 +29,4 @@ FROM base AS prod
 RUN poetry config virtualenvs.create false \
     && poetry install --only main --no-interaction --no-ansi --no-root
 
-CMD poetry run uvicorn underwriter.main:app --reload --host "0.0.0.0"
+CMD poetry run uvicorn underwriter.api.main:app --reload --host "0.0.0.0"

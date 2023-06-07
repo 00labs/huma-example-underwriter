@@ -1,12 +1,12 @@
+import enum
 import os
-from enum import Enum
-from pathlib import Path
+import pathlib
 
 import dotenv
 import pydantic
 
 
-class Env(str, Enum):
+class Env(str, enum.Enum):
     DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -15,11 +15,11 @@ class Env(str, Enum):
 
 ENV = os.getenv("ENV")
 if ENV in (Env.PRODUCTION, Env.STAGING):
-    env_path = Path(__file__).parent / "dotenv" / ".env"
+    env_path = pathlib.Path(__file__).parent / "dotenv" / ".env"
 elif ENV == Env.TEST:
-    env_path = Path(__file__).parent / "dotenv" / "test.env"
+    env_path = pathlib.Path(__file__).parent / "dotenv" / "test.env"
 elif ENV == Env.DEVELOPMENT:
-    env_path = Path(__file__).parent / "dotenv" / "development.env"
+    env_path = pathlib.Path(__file__).parent / "dotenv" / "development.env"
 elif ENV is None:
     raise ValueError("No ENV is defined")
 else:
@@ -33,6 +33,12 @@ class Settings(pydantic.BaseSettings):
         case_sensitive = False
 
     env: str
+    etherscan_base_url: str
+    etherscan_api_key: str
+    web3_provider_url: str
+
+    instrumentation_enabled: bool
+    datadog_api_key: pydantic.SecretStr
 
 
 settings = Settings()

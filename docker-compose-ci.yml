@@ -3,20 +3,25 @@ version: '3.9'
 services:
   lint-tests:
     build:
-      context: .
+      context: credit-line
       dockerfile: Dockerfile
-      target: dev 
-    image: huma-underwriter-eth-txns-ci:latest
+      target: dev
+    image: huma-underwriter-simple-creditline-ci:latest
     command: ["make", "lint-check"]
     environment:
-      - ENV=development
+      - ENV=test
 
   tests:
     build:
-      context: .
+      context: credit-line
       dockerfile: Dockerfile
-      target: dev 
-    image: huma-underwriter-eth-txns-ci:latest
+      target: dev
+    image: huma-underwriter-simple-creditline-ci:latest
     command: ["make", "test"]
     environment:
       - ENV=test
+      - WEB3_PROVIDER_URL
+      - ETHERSCAN_API_KEY
+      - ETHERSCAN_BASE_URL
+      - INSTRUMENTATION_ENABLED=false
+      - DATADOG_API_KEY=""

@@ -1,18 +1,22 @@
 .PHONY: lint, lint-check, test, run-local
 
 lint:
-	poetry run autoflake  --in-place --remove-all-unused-imports --verbose -r underwriter tests
-	poetry run black underwriter tests --target-version py310 -l120
-	poetry run flake8 underwriter tests --max-line-length 120 --ignore "E203, W503" 
-	poetry run isort underwriter tests 
+	poetry run autoflake --verbose .
+	poetry run black .
+	poetry run flake8 --max-line-length 120 --ignore "E203, W503" .
+	poetry run isort .
+	poetry run mypy .
+	poetry run pylint underwriter
 
 lint-check:
-	poetry run black underwriter tests --target-version py310 -l120 --check 
-	poetry run flake8 underwriter tests --max-line-length 120 --ignore "E203, W503"
-	poetry run isort --check underwriter tests
+	poetry run black --check .
+	poetry run flake8 --max-line-length 120 --ignore "E203, W503" .
+	poetry run isort --check .
+	poetry run mypy .
+	poetry run pylint underwriter
 
 test:
-	ENV=test poetry run python3 -m pytest -v --color=yes
+	ENV=test poetry run python3 -m pytest --spec -v --color=yes
 
 run-local:
-	ENV=development poetry run uvicorn underwriter.main:app --reload --host "0.0.0.0"
+	ENV=development poetry run uvicorn underwriter.api.main:app --reload --host "0.0.0.0"
